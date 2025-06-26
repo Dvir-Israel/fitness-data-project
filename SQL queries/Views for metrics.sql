@@ -3,7 +3,7 @@ use [Fitness Database];
 --WeighIns and Measurements:
 --BMI, FFMI, LBM (Lean Body Mass), BFM (Body Fat Mass), W2HR (Waist to height ratio), Body Fat Percentage, Average weight, Average measurement
 --Training Program:
---P1RM (Projected 1RM), EVS (Effective Volume Score), WOT (Weight over time), ARPW (Average reps per weight), Adjusted Training Load (ATL), WI (Workout intensity)
+--P1RM (Projected 1RM), EVS (Effective Volume Score), ARPW (Average reps per weight), Adjusted Training Load (ATL), WI (Workout intensity)
 drop view if exists VW_Base;
 drop view if exists VM_Base;
 drop view if exists VWM_Base;
