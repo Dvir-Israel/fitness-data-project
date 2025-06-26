@@ -1,0 +1,20 @@
+# Ignore raw data files
+*.xlsx
+*.json
+
+# Ignore virtual environments
+venv/
+env/
+fitness_env/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore VSCode/project settings (optional)
+.vscode/
+.idea/
+
+# Ignore system files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,1 @@
+streamlit run "d:/Fitness data project/Python script for Streamlit/Streamlit_code.py"
