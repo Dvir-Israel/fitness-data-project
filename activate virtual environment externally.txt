@@ -1,0 +1,1 @@
+& ".\Python script for Streamlit\fitness_env\Scripts\Activate.ps1"
