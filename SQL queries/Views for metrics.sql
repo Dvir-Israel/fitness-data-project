@@ -78,7 +78,8 @@ create view VWM_BodyMetrics as
 		   LBM = AverageWeight*(1 - AverageBFP),
 		   BFM = AverageWeight * AverageBFP,
 		   W2HR = AverageWaist / Height,
-		   Average_Weight_Loss = isnull(AverageWeight - lag(AverageWeight,1) over (partition by UserID order by week),0)
+		   Average_Weight_Loss = isnull(AverageWeight - lag(AverageWeight,1) over (partition by UserID order by week),0),
+		   Average_Weight_Loss_Pct = isnull((AverageWeight - lag(AverageWeight,1) over (partition by UserID order by week)) / AverageWeight,0)
 	from VWM_Base;
 
 GO
