@@ -115,7 +115,7 @@ create view VTP_RepAverage as
 		   Exercise,
 		   Weight,
 		   Sets = max([Set]),
-		   AverageReps = AVG(reps),
+		   AverageReps = AVG(reps*1.0),
 		   week
 	from VTP_Base
 	group by UserID,
