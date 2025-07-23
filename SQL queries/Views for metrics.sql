@@ -133,15 +133,18 @@ create view VTP_TrainingMetrics as
     with cteMetrics as
 	(select vtpra.*,
 		   vwmb.AverageWeight,
-		   P1RM = case when AverageReps > 15 and Weight = 0 then (vwmb.AverageWeight / (dbo.Calculate1RMPercentage(15) - (cast(AverageReps as int) - 15) * 0.025)) - vwmb.AverageWeight
+		   P1RM = case when AverageReps = 0 then 0
+		          when AverageReps > 15 and Weight = 0 then (vwmb.AverageWeight / (dbo.Calculate1RMPercentage(15) - (cast(AverageReps as int) - 15) * 0.025)) - vwmb.AverageWeight
 				  when AverageReps > 15 then Weight / (dbo.Calculate1RMPercentage(15) - (cast(AverageReps as int) - 15) * 0.025)
 				  when Weight = 0 then (vwmb.AverageWeight / dbo.Calculate1RMPercentage(cast(AverageReps as int))) - vwmb.AverageWeight
 				  else Weight / dbo.Calculate1RMPercentage(cast(AverageReps as int)) end,
-		   EVS = case when AverageReps > 15 and Weight = 0 then 1 * AverageReps * [Sets] * (dbo.Calculate1RMPercentage(15) - (cast(AverageReps as int) - 15) * 0.025)
+		   EVS = case when AverageReps = 0 then 0
+		              when AverageReps > 15 and Weight = 0 then 1 * AverageReps * [Sets] * (dbo.Calculate1RMPercentage(15) - (cast(AverageReps as int) - 15) * 0.025)
 					  when AverageReps > 15 then Weight * AverageReps * [Sets] * (dbo.Calculate1RMPercentage(15) - (cast(AverageReps as int) - 15) * 0.025)
 					  when Weight = 0 then 1 * AverageReps * [Sets] * dbo.Calculate1RMPercentage(cast(AverageReps as int))
 					  else Weight * AverageReps * [Sets] * dbo.Calculate1RMPercentage(cast(AverageReps as int)) end,
-		   ATL = case when Weight = 0 then 1.0 / AverageReps
+		   ATL = case when AverageReps = 0 then 0
+		              when Weight = 0 then 1.0 / AverageReps
 		              else Weight / AverageReps end
 	from VTP_RepAverage vtpra
 	inner join VWM_Base vwmb
