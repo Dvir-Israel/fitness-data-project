@@ -53,6 +53,7 @@ ALTER TABLE SleepData
 -- 3) RE-ADD FOREIGN KEYS
 ---------------------------------------
 -- If a user is deleted, cascade their personal logs
+-- could possibly delete this since I want to save historic data - need to consult the AI
 ALTER TABLE Measurements
   ADD CONSTRAINT measurements_userid_fkey
   FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE;
@@ -103,6 +104,7 @@ ALTER TABLE SleepData
 -- 5) CHECK constraints (realistic)
 ---------------------------------------
 -- Measurements: non-negatives, process week >= 1, BFP 0..100
+-- Try to check if we can use UINT instead
 ALTER TABLE Measurements
   ADD CONSTRAINT chk_measure_waist_nonneg  CHECK (Waist IS NULL OR Waist >= 0),
   ADD CONSTRAINT chk_measure_arm_nonneg    CHECK (Arm   IS NULL OR Arm   >= 0),
@@ -117,6 +119,7 @@ ALTER TABLE WeighIns
   ADD CONSTRAINT chk_weighin_week_process CHECK (week IS NULL OR week >= 1);
 
 -- TrainingProgramDetails: set>0, Reps>=0, targets>0, weight>=0, week>=1, RPE 1..10, exercise type optional whitelist
+-- Instead of constraint, we could use exercise type table
 ALTER TABLE TrainingProgramDetails
   ADD CONSTRAINT chk_tpd_set_pos        CHECK (set > 0),
   ADD CONSTRAINT chk_tpd_reps_nonneg    CHECK (Reps IS NULL OR Reps >= 0),
@@ -125,7 +128,7 @@ ALTER TABLE TrainingProgramDetails
   ADD CONSTRAINT chk_tpd_week_process   CHECK (week IS NULL OR week >= 1),
   ADD CONSTRAINT chk_tpd_rpe_range      CHECK (RPE IS NULL OR RPE BETWEEN 1 AND 10),
   ADD CONSTRAINT chk_tpd_exercisetype   CHECK (ExerciseType IS NULL OR ExerciseType IN
-      ('compound','isolation','cardio','accessory','mobility'));
+      ('compound','isolation','cardio','accessory','mobility','warmup'));
 
 -- SleepData: non-negatives, respiration non-negatives, end > start when both present
 ALTER TABLE SleepData

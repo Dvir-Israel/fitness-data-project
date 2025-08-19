@@ -76,3 +76,5 @@ CREATE TABLE fitness.SleepData (
     Retro BOOLEAN,
     SleepWindowConfirmationType VARCHAR(50)
 );
+
+-- Consider adding exercises table and for each training program, add constraints for what type of muscle groups will be included in each split
